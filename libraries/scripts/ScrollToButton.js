@@ -2,7 +2,7 @@
  * @file ScrollToButton、ScrollToTopButton と ScrollToBottomButton クラスのファイルです。
  * 
  * @author MOTOMATSU Yoji
- * @version 1.4.0
+ * @version 1.5.0
  */
 
 import { HTMLUtilities } from './HTMLUtilities.js';
@@ -50,13 +50,7 @@ export class ScrollToButton {
         // スクロールバーと重ならないように移動します。
         this.translateX(-HTMLUtilities.getScrollbarWidthAsInteger(), '0s');
 
-        // Scroll To Button の幅が 72px の時に角部の丸みが 8px の比率とします。
-        const width = HTMLUtilities.getPropertyValueAsInteger(this._element, 'width');
-        const radius = 8 * width / 72;
-
         this._pushing = false;
-        this._boxShadow =
-            `${radius / 2}px ${radius / 2}px ${radius / 2}px 0px ${Theme.darkBorderColor}`;
 
         const domParser = new DOMParser();
         const svgDocument = domParser.parseFromString(svgSource, 'image/svg+xml');
@@ -67,7 +61,7 @@ export class ScrollToButton {
         this._svgElement.style.height = '100%';
         this._svgElement.style.width = '100%';
         this._svgElement.style.border = 'none';
-        this._svgElement.style.borderRadius = `${radius}px`;
+        this._svgElement.style.borderRadius = Theme.defaultBorderRadious;
         this._svgElement.style.zIndex = ScrollToButton.zIndex;
         this._svgRect = this._svgElement.getElementById(svgRectId);
 
@@ -78,7 +72,7 @@ export class ScrollToButton {
         this._shadowElement.style.height = '100%';
         this._shadowElement.style.width = '100%';
         this._shadowElement.style.border = 'none';
-        this._shadowElement.style.borderRadius = `${radius}px`;
+        this._shadowElement.style.borderRadius = Theme.defaultBorderRadious;
         this._shadowElement.style.zIndex = ScrollToButton.zIndexShadow;
 
         this._element.appendChild(this._svgElement);
@@ -131,7 +125,7 @@ export class ScrollToButton {
      */
     show() {
         this._element.style.transition =
-            `opacity ${Theme.transitionDuration}, visibility 0s`;
+            `opacity ${Theme.defaultTransitionDuration}, visibility 0s`;
         this._element.style.opacity = '1.0';
         this._element.style.visibility = 'visible';
     }
@@ -140,8 +134,8 @@ export class ScrollToButton {
      * ボタンを非表示にします。
      */
     hide() {
-        this._element.style.transition =
-            `opacity ${Theme.transitionDuration}, visibility 0s ${Theme.transitionDelay}`;
+        this._element.style.transition = `opacity ${Theme.defaultTransitionDuration},
+            visibility 0s ${Theme.defaultTransitionDelay}`;
         this._element.style.opacity = '0.0';
         this._element.style.visibility = 'hidden';
     }
@@ -151,7 +145,7 @@ export class ScrollToButton {
      * @param {number} value    - 移動量 (px)
      * @param {string} duration - 移動にかかる時間
      */
-    translateX(value, duration = Theme.transitionDuration) {
+    translateX(value, duration = Theme.defaultTransitionDuration) {
         const right = HTMLUtilities.getPropertyValueAsInteger(this._element, 'right');
         this._element.style.transition = `right ${duration}`;
         this._element.style.right = `${right - value}px`;
@@ -162,20 +156,20 @@ export class ScrollToButton {
         if (this._pushing) {
             this._setPushedColor('0s');
         } else {
-            this._setNormalColor(Theme.transitionDuration);
+            this._setNormalColor(Theme.defaultTransitionDuration);
         }
     }
 
     _setNormalColor(duration) {
         this._shadowElement.style.transition = `box-shadow ${duration}`;
-        this._shadowElement.style.boxShadow = this._boxShadow;
+        this._shadowElement.style.boxShadow = Theme.defaultBoxShadow;
         this._svgRect.style.transition = `fill ${duration}`;
         this._svgRect.style.fill = Theme.transparentMainColor;
     }
 
     _setPushedColor(duration) {
         this._shadowElement.style.transition = `box-shadow ${duration}`;
-        this._shadowElement.style.boxShadow = `${this._boxShadow} inset`;
+        this._shadowElement.style.boxShadow = `${Theme.defaultBoxShadow} inset`;
         this._svgRect.style.transition = `fill ${duration}`;
         this._svgRect.style.fill = Theme.transparentAccentColor;
     }
