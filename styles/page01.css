@@ -1,0 +1,6 @@
+@import "../libraries/styles/default.css";
+
+body {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
