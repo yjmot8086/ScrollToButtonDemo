@@ -1,7 +1,7 @@
 import {
     ScrollToTopButton,
     ScrollToBottomButton,
-} from '../libraries/scripts/ScrollToButton.js';
+} from '../modules/scripts/ScrollToButton.js';
 
 const scrollToTopButton = new ScrollToTopButton('scroll-to-top-button');
 const scrollToBottomButton = new ScrollToBottomButton('scroll-to-bottom-button');

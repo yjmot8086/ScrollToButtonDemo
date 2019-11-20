@@ -2,7 +2,7 @@
  * @file ScrollToButton、ScrollToTopButton と ScrollToBottomButton クラスのファイルです。
  * 
  * @author MOTOMATSU Yoji
- * @version 1.5.0
+ * @version 1.6.1
  */
 
 import { HTMLUtilities } from './HTMLUtilities.js';
@@ -37,7 +37,7 @@ export class ScrollToButton {
 
     /**
      * コンストラクタです。 
-     * @param {sting} id         - HTML の div 要素オブジェクトの id
+     * @param {sting}  id        - HTML の div 要素オブジェクトの id
      * @param {string} svgRectId - 派生クラスのボタン背景の要素オブジェクトの id
      * @param {string} svgSource - 派生クラスで表示する SVG ソース
      */
@@ -95,8 +95,7 @@ export class ScrollToButton {
             let rect = this._svgElement.getBoundingClientRect();
             let x = event.touches[0].clientX;
             let y = event.touches[0].clientY;
-            if ((x < rect.left) || (rect.right < x) ||
-                (y < rect.top) || (rect.bottom < y)) {
+            if (x < rect.left || rect.right < x || y < rect.top || rect.bottom < y) {
                 this._setPushing(false);
             }
         });
