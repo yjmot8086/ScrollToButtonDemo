@@ -1,4 +1,4 @@
-@import "../libraries/styles/default.css";
+@import "../modules/styles/default.css";
 
 article {
   -webkit-overflow-scrolling: touch;
